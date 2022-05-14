@@ -92,5 +92,6 @@ int	main(void)
 		idx++;
 	}
 	printf("%d", max_comb);
+	free(cards);
 	return (0);
 }

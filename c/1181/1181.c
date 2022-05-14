@@ -93,5 +93,6 @@ int	main(void)
 			printf("%s\n", strs[idx]);
 		idx++;
 	}
+	free(strs);
 	return (0);
 }
