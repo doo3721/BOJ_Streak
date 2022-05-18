@@ -3,20 +3,17 @@
 int	ft_bi_search(int *arr, int i_find, int left, int right)
 {
 	int mid;
-	int is_bool;
 
-	is_bool = 0;
-	if (left <= right)
-	{
-		mid = (left + right) / 2;
-		if (i_find < arr[mid])
-			is_bool = ft_bi_search(arr, i_find, left, mid - 1);
-		else if (i_find > arr[mid])
-			is_bool = ft_bi_search(arr, i_find, mid + 1, right);
-		else
-			is_bool = 1;
-	}
-	return (is_bool);
+	if (left > right)
+		return (0);
+	
+	mid = (left + right) / 2;
+	if (i_find < arr[mid])
+		return (ft_bi_search(arr, i_find, left, mid - 1));
+	else if (i_find > arr[mid])
+		return (ft_bi_search(arr, i_find, mid + 1, right));
+	else
+		return (1);
 }
 
 void	ft_merge(int *arr, int left, int right, int mid)
