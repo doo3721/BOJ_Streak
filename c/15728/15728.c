@@ -2,7 +2,7 @@
 
 void	ft_merge(int *arr, int left, int right, int mid)
 {
-	int temp[100];
+	int temp[110];
 	int i_l, i_r, t_idx;
 
 	i_l = left;
@@ -43,8 +43,8 @@ void	ft_mergesort(int *arr, int left, int right)
 
 int main(void)
 {
-	int n_arr[100];
-	int n, k, idx, num, s_max, s_min, ans;
+	int mul[110];
+	int n, k, idx, num, m_idx, s_min, s_max;
 
 	scanf("%d%d", &n, &k);
 
@@ -54,42 +54,26 @@ int main(void)
 	while (idx < n)
 	{
 		scanf("%d", &num);
+		if (s_min > num)
+			s_min = num;
 		if (s_max < num)
 			s_max = num;
-		else if (s_max > num)
-			s_min = num;
 		idx++;
 	}
 	
 	idx = 0;
+	m_idx = 0;
 	while (idx < n)
-		scanf("%d", &n_arr[idx++]);
+	{
+		scanf("%d", &num);
+		if (s_min * num > s_max * num)
+			mul[m_idx++] = s_min * num;
+		else
+			mul[m_idx++] = s_max * num;
+		idx++;
+	}
 	
-	ft_mergesort(n_arr, 0, n - 1);
-
-	if (s_max < 0 && n_arr[0] > 0)
-		
-	printf("%d", s_max * n_arr[n - 1 - k]);
+	ft_mergesort(mul, 0, n - 1);
+	printf("%d", mul[n - 1 - k]);
 	return (0);
 }
-/*
-
-s_max가 음수인 경우
-
-	n_arr가 음수인 경우 -> s_min * n_arr[k]
-	n_arr가 양수인 경우 -> s_max * n_arr[k]
-	n_arr가 음~양 인경우 -> s_min * n_arr[k], s_max * n_arr[k] 비교
-
-s_min이 양수인 경우
-
-	n_arr가 음수인 경우 -> s_min * n_arr[n - 1 - k]
-	n_arr가 양수인 경우 -> s_max * n_arr[n - 1 - k]
-	n_arr가 음~양 인경우 -> s_max * n_arr[n - 1 - k]	
-
-s_min은 음수 s_max는 양수인 경우
-
-	n_arr가 음수인 경우 -> s_min * n_arr[k], s_min * n_arr[n - 1 - k] 비교
-	n_arr가 양수인 경우 -> s_max * n_arr[k], s_max * n_arr[n - 1 - k] 비교
-	n_arr가 음~양 인경우 -> s_
-
-*/
