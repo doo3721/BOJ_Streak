@@ -17,7 +17,7 @@ float	ft_min_disc(int a, int b, int c)
 			return (idx);
 		idx++;
 	}
-
+	
 	f_idx = idx - 1;
 	while (f_idx * f_idx <= num)
 	{
@@ -39,18 +39,18 @@ int main(void)
 
 	if (a2 == c)
 	{
-		if ((a1 == 0 && a0 <= 0) || (a1 < 0 && n0 >= a0 / a1))
+		if ((a1 == 0 && a0 >= 0) || (a1 > 0 && n0 >= a0 / a1))
 			printf("1");
 		else
 			printf("0");
 	}
-	else if (c > a2)
+	else if (a2 > c)
 	{
-		min_disc = ft_min_disc(c - a2, -a1, -a0);
+		min_disc = ft_min_disc(a2 - c, a1, a0);
 
 		if (min_disc > 0)
 		{
-			max_x = (float) (a1 + min_disc) / (float) (2 * (c - a2));
+			max_x = (float) (-a1 + min_disc) / (float) (2 * (a2 - c));
 
 			if (n0 >= max_x)
 				printf("1");
@@ -58,7 +58,7 @@ int main(void)
 				printf("0");
 		}
 		else
-			printf ("1");
+			printf("1");
 	}
 	else
 		printf("0");
