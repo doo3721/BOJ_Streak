@@ -80,7 +80,6 @@ int main(void)
 	poke	*dex_no_sort;
 	char	target[21];
 
-
 	scanf("%d%d", &n, &m);
 
 	dex_name_sort = malloc(sizeof(poke) * n);
@@ -112,5 +111,7 @@ int main(void)
 			printf("%d\n", ft_no_search(dex_name_sort, target));
 		idx++;
 	}
+	free(dex_name_sort);
+	free(dex_no_sort);
 	return (0);
 }
