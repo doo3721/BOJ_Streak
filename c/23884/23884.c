@@ -51,7 +51,9 @@ void	ft_sort(int *a, sorting *s)
 			ft_swap(&a[idx], &a[i_n]);
 			if (!(--k))
 			{
-				printf("%d %d", a[idx], a[i_n]);
+				idx = 0;
+				while (idx < n)
+					printf("%d ", a[idx++]);
 				exit(0);
 			}
 			s[i_n].i = i_n;

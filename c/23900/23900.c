@@ -7,7 +7,7 @@ typedef struct s_sorting
 	int i;
 }	sorting;
 
-static int n, k;
+static int n;
 
 void	ft_swap(int *a, int *b)
 {
@@ -38,10 +38,27 @@ int	ft_search(sorting *s, int v)
 	return (0);
 }
 
-void	ft_sort(int *a, sorting *s)
+void	ft_equal(int *a, int *b)
+{
+	int idx;
+
+	idx = 0;
+	while (idx < n)
+	{
+		if (a[idx] != b[idx])
+			return ;
+		idx++;
+	}
+
+	printf("1");
+	exit(0);
+}
+
+void	ft_sort(int *a, int *b, sorting *s)
 {
 	int i_n, idx;
 
+	ft_equal(a, b);
 	i_n = n - 1;
 	while (i_n)
 	{
@@ -49,20 +66,15 @@ void	ft_sort(int *a, sorting *s)
 		{
 			idx = s[i_n].i;
 			ft_swap(&a[idx], &a[i_n]);
-			if (!(--k))
-			{
-				printf("%d %d", a[idx], a[i_n]);
-				exit(0);
-			}
+			ft_equal(a, b);
 			s[i_n].i = i_n;
 			s[ft_search(s, a[idx])].i = idx;
 		}
 
 		i_n--;
 	}
-
-	if (k)
-		printf("-1");
+	
+	printf("0");
 }
 
 void	ft_merge(sorting *s, int left, int right, int mid)
@@ -108,10 +120,11 @@ void	ft_mergesort(sorting *s, int left, int right)
 int main(void)
 {
 	int	a[500000];
+	int b[500000];
 	sorting	*s;
 	int idx;
 
-	scanf("%d%d", &n, &k);
+	scanf("%d", &n);
 	s = malloc(sizeof(sorting) * n);
 
 	idx = 0;
@@ -123,8 +136,12 @@ int main(void)
 		idx++;
 	}
 
+	idx = 0;
+	while (idx < n)
+		scanf("%d", &b[idx++]);
+
 	ft_mergesort(s, 0, n - 1);
-	ft_sort(a, s);
+	ft_sort(a, b, s);
 	
 	return (0);
 }
