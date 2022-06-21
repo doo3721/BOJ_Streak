@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-static int	k;
+static int	n, k;
 
 void	ft_swap(int *a, int *b)
 {
@@ -60,7 +60,7 @@ void	ft_sort(int *a, int left, int right)
 int main(void)
 {
 	int	a[10000];
-	int n, idx;
+	int idx;
 
 	scanf("%d%d", &n, &k);
 

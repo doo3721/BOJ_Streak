@@ -1,76 +1,182 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-void	ft_sort(int *a, int *b, int n)
+static int n;
+
+void	ft_swap(int *a, int *b)
 {
-	int idx, max, i_n, is_equal, s_idx;
+	int temp;
 
-	is_equal = 1;
-	s_idx = 0;
-	while (s_idx < n)
+	temp = *a;
+	*a = *b;
+	*b = temp;
+}
+/*
+void	ft_merge(int *s, int left, int right, int mid)
+{
+	int l, r, idx;
+	int temp[n];
+
+	l = left;
+	r = mid + 1;
+	idx = 0;
+	while (l <= mid && r <= right)
 	{
-		if (a[s_idx] != b[s_idx])
-		{
-			is_equal = 0;
-			break ;
-		}
-		s_idx++;
+		if (s[l] <= s[r])
+			temp[idx++] = s[l++];
+		else
+			temp[idx++] = s[r++];
 	}
 
-	if (is_equal)
+	while (l <= mid)
+		temp[idx++] = s[l++];
+	while (r <= right)
+		temp[idx++] = s[r++];
+
+	l = left;
+	idx = 0;
+	while (l <= right)
+		s[l++] = temp[idx++];
+}
+
+void	ft_mergesort(int *s, int left, int right)
+{
+	int mid;
+
+	if (left < right)
 	{
-		printf("1");
-		return ;
+		mid = (left + right) / 2;
+		ft_mergesort(s, left, mid);
+		ft_mergesort(s, mid + 1, right);
+		ft_merge(s, left, right, mid);
+	}
+}
+
+void	ft_equal(int *a, int *b)
+{
+	int idx;
+
+	idx = 0;
+	while (idx < n)
+	{
+		if (a[idx] != b[idx])
+			return ;
+		idx++;
 	}
 
-	i_n = n;
-	while (i_n - 1)
+	printf("1");
+	exit(0);
+}
+
+void	ft_sort(int *a, int *b, int *s)
+{
+	int idx, i_n;
+
+	i_n = n - 1;
+	while (i_n && s[i_n] == b[i_n])
 	{
-		idx = 0;
-		while (idx < i_n - 1)
+		if (s[i_n] != a[i_n])
 		{
-			is_equal = 0;
-			if (a[idx] > a[idx + 1])
+			idx = 0;
+			while (idx < i_n)
 			{
-				max = a[idx];
-				a[idx] = a[idx + 1];
-				a[idx + 1] = max;
+				if (a[idx] > a[idx + 1])
+					ft_swap(&a[idx], &a[idx + 1]);
+				idx++;
 			}
-
-			if (a[idx] == b[idx] && a[0] == b[0] && a[n - 1] == b[n - 1])
-			{
-				is_equal = 1;
-				s_idx = 0;
-				while (s_idx < n)
-				{
-					if (a[s_idx] != b[s_idx])
-					{
-						is_equal = 0;
-						break ;
-					}
-					s_idx++;
-				}
-			}
-
-			if (is_equal)
-				break ;
-
-			idx++;
 		}
-
-		if (is_equal)
-			break ;
-
 		i_n--;
 	}
 
-	printf("%d", is_equal);
+	ft_equal(a, b);
+	idx = 0;
+	while (idx < i_n)
+	{
+		if (a[idx] > a[idx + 1])
+		{	
+			ft_swap(&a[idx], &a[idx + 1]);
+			ft_equal(a, b);
+		}
+		idx++;
+	}
+
+	printf("0");
 }
 
 int main(void)
 {
 	int	a[10000];
 	int b[10000];
-	int n, idx;
+	int s[10000];
+	int idx;
+
+	scanf("%d", &n);
+
+	idx = 0;
+	while (idx < n)
+	{
+		scanf("%d", &a[idx]);
+		s[idx] = a[idx];
+		idx++;
+	}
+	
+	idx = 0;
+	while (idx < n)
+		scanf("%d", &b[idx++]);
+
+	ft_mergesort(s, 0, n - 1);
+	ft_sort(a, b, s);
+	
+	return (0);
+}
+*/
+
+void	ft_equal(int *a, int *b)
+{
+	int idx;
+
+	idx = 0;
+	while (idx < n)
+	{
+		if (a[idx] != b[idx])
+			return ;
+		idx++;
+	}
+
+	printf("1");
+	exit(0);
+}
+
+void	ft_sort(int *a, int *b)
+{
+	int idx, i_n;
+
+	ft_equal(a, b);
+	i_n = n - 1;
+	while (i_n)
+	{
+		idx = 0;
+		while (idx < i_n)
+		{
+			if (a[idx] > a[idx + 1])
+			{	
+				ft_swap(&a[idx], &a[idx + 1]);
+				if (a[idx] == b[idx] && a[idx + 1] == b[idx + 1])
+					ft_equal(a, b);
+			}
+			idx++;
+		}
+		i_n--;
+	}
+	
+	printf("0");
+}
+
+int main(void)
+{
+	int	a[10000];
+	int b[10000];
+	int idx;
 
 	scanf("%d", &n);
 
@@ -82,7 +188,7 @@ int main(void)
 	while (idx < n)
 		scanf("%d", &b[idx++]);
 
-	ft_sort(a, b, n);
+	ft_sort(a, b);
 	
 	return (0);
 }

@@ -1,10 +1,12 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-void	ft_sort(int *a, int n, int k)
+static int	n, k;
+
+void	ft_sort(int *a)
 {
-	int idx, count, i_n, new_a;
+	int idx, i_n, new_a;
 
-	count = 0;
 	i_n = 1;
 	while (i_n < n)
 	{
@@ -14,31 +16,35 @@ void	ft_sort(int *a, int n, int k)
 		while (idx >= 0 && new_a < a[idx])
 		{
 			a[idx + 1] = a[idx];
-			count++;
-			if (count == k)
+			if (!(--k))
+			{
 				printf("%d", a[idx + 1]);
+				exit(0);
+			}
 			idx--;
 		}
 
 		if (idx + 1 != i_n)
 		{
 			a[idx + 1] = new_a;
-			count++;
-			if (count == k)
+			if (!(--k))
+			{
 				printf("%d", a[idx + 1]);
+				exit(0);
+			}
 		}
 
 		i_n++;
 	}
 
-	if (count < k)
+	if (k)
 		printf("-1");
 }
 
 int main(void)
 {
 	int	a[10000];
-	int n, k, idx;
+	int idx;
 
 	scanf("%d%d", &n, &k);
 
@@ -46,7 +52,7 @@ int main(void)
 	while (idx < n)
 		scanf("%d", &a[idx++]);
 
-	ft_sort(a, n, k);
+	ft_sort(a);
 	
 	return (0);
 }
