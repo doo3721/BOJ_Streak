@@ -1,127 +1,69 @@
 #include <stdio.h>
-#include <stdlib.h>
 
-static int	n, m, b, min_h, max_h, time;
+static int n, m, b, ans_t, ans_h, min_h;
 
-int	ft_check(int **map, int h)
+void	ft_solve(int map[][500])
 {
-	int n_idx, m_idx, temp_b, t_time;
+	int	h, i, j, r_b, f_b, t;
 
-	temp_b = b;
-	t_time = 0;
-	n_idx = 0;
-	while (n_idx < n)
+	ans_t = -1;
+	h = ans_h;
+	while (h >= min_h)
 	{
-		m_idx = 0;
-		while (m_idx < m)
+		i = 0;
+		r_b = 0;
+		f_b = 0;
+		while (i < n)
 		{
-			if (h - map[n_idx][m_idx] > 0)
+			j = 0;
+			while (j < m)
 			{
-				temp_b -= (h - map[n_idx][m_idx]) ;
-				t_time += (h - map[n_idx][m_idx]);
+				if (map[i][j] >= h)
+					r_b += map[i][j] - h;
+				else
+					f_b += h - map[i][j];
+				j++;
 			}
-			m_idx++;
+			i++;
 		}
-		n_idx++;
-	}
 
-	if (temp_b >= 0 && !t_time)
-	{
-		if (t_time <= time)
+		if (r_b + b >= f_b)
 		{
-			time = t_time;
-			return (3);
-		}
-		else
-			return (2);
-	}
-
-	n_idx = 0;
-	while (n_idx < n)
-	{
-		m_idx = 0;
-		while (m_idx < m)
-		{
-			if (map[n_idx][m_idx] - h > 0)
+			t = r_b * 2 + f_b;
+			if (t < ans_t || ans_t < 0)
 			{
-				temp_b += (map[n_idx][m_idx] - h);
-				t_time += (map[n_idx][m_idx] - h) * 2;
+				ans_h = h;
+				ans_t = t;
 			}
-			m_idx++;
 		}
-		n_idx++;
+		h--;
 	}
-
-	if (temp_b >= 0 && !t_time)
-	{
-		if (t_time <= time)
-		{
-			time = t_time;
-			return (1);
-		}
-		else
-			return (0);
-	}
-	return (0);
-}
-
-void	ft_search(int **map)
-{
-	int left, right, mid;
-
-	time = 2000000000;
-	left = min_h;
-	right = max_h;
-	while (left < right)
-	{
-		mid = (left + right) / 2;
-		if (ft_check(map, mid) == 3)
-			left = mid + 1;
-		else if (ft_check(map, mid) == 2)
-			right = mid;
-		else if (ft_check(map, mid) == 1)
-			left = mid + 1;
-		else
-			right = mid;
-	}
-
-	while (!ft_check(map, right))
-		right--;
-	
-	max_h = right;
 }
 
 int main(void)
 {
-	int n_idx, m_idx;
-	int **map;
+	int i, j, map[500][500];
 
 	scanf("%d%d%d", &n, &m, &b);
 
-	map = malloc(sizeof(int *) * n);
-
-	n_idx = 0;
-	min_h = 256;
-	min_h = 0;
-	while (n_idx < n)
+	i = 0;
+	ans_h = 0;
+	min_h = 257;
+	while (i < n)
 	{
-		map[n_idx] = malloc(sizeof(int) * m);
-		m_idx = 0;
-		while (m_idx < m)
+		j = 0;
+		while (j < m)
 		{
-			scanf("%d", &map[n_idx][m_idx]);
-			if (min_h > map[n_idx][m_idx])
-				min_h = map[n_idx][m_idx];
-			else if (max_h < map[n_idx][m_idx])
-				max_h = map[n_idx][m_idx];
-			m_idx++;
+			scanf("%d", &map[i][j++]);
+			if (ans_h < map[i][j - 1])
+				ans_h = map[i][j - 1];
+			else if (min_h > map[i][j - 1])
+				min_h = map[i][j - 1];
 		}
-		n_idx++;
+		i++;
 	}
 
-	ft_search(map);
-	printf("%d %d", time, max_h);
-
-	free(map);
+	ft_solve(map);
+	printf("%d %d", ans_t, ans_h);
 	return (0);
 }
