@@ -2,15 +2,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-static char	s[500000][21];
-static int	a[500000];
-
 int	ft_cmp(const void *a, const void *b)
 {
 	return strcmp((char *)a, (char *)b);
 }
 
-int	ft_search(char s[][21], char *t, int n)
+int	ft_search(char s[][501], char *t, int n)
 {
 	int l, r, m;
 
@@ -20,27 +17,26 @@ int	ft_search(char s[][21], char *t, int n)
 	{
 		m = (l + r) / 2;
 		if (!strcmp(s[m], t))
-			return (m);
+			return (1);
 		else if (strcmp(s[m], t) > 0)
 			r = m - 1;
 		else
 			l = m + 1;
 	}
-	return (-1);
+	return (0);
 }
 
 int main(void)
 {
-	int		n, m, i, c, x;
-
-	char	t[21];
+	int		n, m, i, c;
+	char	s[10000][501];
+	char	t[501];
 
 	scanf("%d%d", &n, &m);
-
 	i = 0;
 	while (i < n)
 		scanf("%s", s[i++]);
-
+	
 	qsort(s, n, sizeof(s[0]), ft_cmp);
 
 	i = 0;
@@ -48,22 +44,10 @@ int main(void)
 	while (i < m)
 	{
 		scanf("%s", t);
-		x = ft_search(s, t, n - 1);
-		if (x != -1)
-		{
-			a[x] = 1;
-			c++;
-		}
+		c += ft_search(s, t, n - 1);
 		i++;
 	}
 
-	printf("%d\n", c);
-	i = 0;
-	while (i < n)
-	{
-		if (a[i])
-			printf("%s\n", s[i]);
-		i++;
-	}
+	printf("%d", c);
 	return (0);
 }
