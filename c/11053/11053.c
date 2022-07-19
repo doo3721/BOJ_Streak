@@ -1,6 +1,8 @@
 #include <stdio.h>
 
 static int	arr[1001];
+static int	lis[1001];
+/*
 static int	dp[1001];
 
 static int	ft_max(int a, int b)
@@ -34,5 +36,49 @@ int	main(void)
 		idx++;
 	}
 	printf("%d", max);
+	return (0);
+}
+*/
+
+static int binary_search(int t, int n)
+{
+	int l, r, m;
+
+	l = 0;
+	r = n;
+	while (l < r)
+	{
+		m = (l + r) / 2;
+		if (lis[m] < t)
+			l = m + 1;
+		else
+			r = m;
+	}
+	return (r);
+}
+
+int main(void)
+{
+	int	n, idx, i, j;
+
+	scanf("%d", &n);
+
+	idx = 0;
+	while (idx < n)
+		scanf("%d", &arr[idx++]);
+	
+	lis[0] = arr[0];
+	j = 0;
+	for (i = 1; i < n; i++)
+	{
+		if (lis[j] < arr[i])
+			lis[++j] = arr[i];
+		else
+		{
+			idx = binary_search(arr[i], j);
+			lis[idx] = arr[i];
+		}
+	}
+	printf("%d", j + 1);
 	return (0);
 }
