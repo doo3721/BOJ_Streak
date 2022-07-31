@@ -6,7 +6,7 @@ static int	dp[10001];
 
 int main(void)
 {
-	int	n, m, idx, s_idx, sum;
+	int	n, m, idx, cost_idx, sum;
 
 	scanf("%d%d", &n, &m);
 
@@ -24,12 +24,12 @@ int main(void)
 	idx = 0;
 	while (idx < n)
 	{
-		s_idx = sum;
-		while (s_idx >= cost[idx])
+		cost_idx = sum;
+		while (cost_idx >= cost[idx])
 		{
-			if (dp[s_idx] < dp[s_idx - cost[idx]] + ps[idx])
-				dp[s_idx] = dp[s_idx - cost[idx]] + ps[idx];
-			s_idx--;
+			if (dp[cost_idx] < dp[cost_idx - cost[idx]] + ps[idx])
+				dp[cost_idx] = dp[cost_idx - cost[idx]] + ps[idx];
+			cost_idx--;
 		}
 		idx++;
 	}
