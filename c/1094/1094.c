@@ -1,21 +1,18 @@
 #include <stdio.h>
 
-static int	dp[1000001] = {0, };
-
-int main(void)
+int	main(void)
 {
-	int	n, idx;
+	int	n, count;
 
 	scanf("%d", &n);
 
-	dp[1] = 1;
-	dp[2] = 2;
-	idx = 3;
-	while (idx <= n)
+	count = 0;
+	while (n)
 	{
-		dp[idx] = (dp[idx - 1] + dp[idx - 2]) % 15746;
-		idx++;
+		if (n % 2)
+			count++;
+		n /= 2;
 	}
-	printf("%d", dp[n]);
+	printf("%d", count);
 	return (0);
 }
