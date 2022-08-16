@@ -20,7 +20,7 @@ int	main(void)
 	char	num[20];
 	int		i, count, temp;
 
-	while (read(0, num, 20))
+	while (read(0, num, 20) > 0)
 	{
 		if (!n)
 		{
